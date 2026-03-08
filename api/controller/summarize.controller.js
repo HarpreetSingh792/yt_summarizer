@@ -1,5 +1,5 @@
 import { JobModel } from "../../models/job.model.js";
-// import { addSummaryJob } from "../../queue/jobProducer.js";
+import { addSummaryJob } from "../../queue/jobProducer.js";
 import extractVideoId from "../../utils/validateURL.js";
 
 export const summarizeVideo = async (req, res) => {
