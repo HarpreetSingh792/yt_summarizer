@@ -14,6 +14,7 @@ import { connectDB } from "./config/db.js";
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export const app = express();
+app.set("trust proxy", 1);
 
 // Middlewares
 app.use(cors());
