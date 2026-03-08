@@ -4,7 +4,7 @@ export const getTranscript = async (videoId) => {
 
   return new Promise((resolve, reject) => {
     const url = `https://www.youtube.com/watch?v=${videoId}`;
-    const command = `python3 -m yt_dlp \
+    const command = `yt_dlp \
 --cookies cookies.txt \
 --js-runtimes node \
 --remote-components ejs:github \
