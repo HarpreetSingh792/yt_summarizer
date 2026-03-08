@@ -37,7 +37,7 @@ app.use((req, res) => {
 });
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 // Server
 const PORT = process.env.PORT || 3000;
 server(app, PORT);
