@@ -15,11 +15,14 @@ export async function processSummaryJob(job) {
     // 2️⃣ Extract transcript
     const transcript = await getTranscript(videoId);
 
+    console.log("Transcript length:", transcript?.length);
+    console.log("Transcript preview:", transcript?.slice(0, 200));
+
     if (!transcript || transcript.length < 200) {
       throw new Error("Transcript unavailable or too short");
     }
 
-    
+
 
     // 4️⃣ Summarize (chunking handled in llm.service)
     const summary = await summarizeText(transcript, language);
