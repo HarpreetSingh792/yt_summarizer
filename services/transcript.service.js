@@ -23,11 +23,11 @@ ${url}`;
       console.log("STDOUT:", stdout);
       console.log("STDERR:", stderr);
 
-      if (error) {
+      const subtitleFile = `temp_${videoId}.en.vtt`;
+
+      if (error && !fs.existsSync(subtitleFile)) {
         return reject(new Error(stderr || error.message));
       }
-
-      const subtitleFile = `temp_${videoId}.en.vtt`;
 
 
       if (!fs.existsSync(subtitleFile)) {
