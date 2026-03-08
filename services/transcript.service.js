@@ -5,14 +5,15 @@ export const getTranscript = async (videoId) => {
   return new Promise((resolve, reject) => {
     const url = `https://www.youtube.com/watch?v=${videoId}`;
     const command = `yt-dlp \
---cookies cookies.txt \
---skip-download \
---write-auto-sub \
---sub-langs "en.*" \
---sub-format vtt \
---no-playlist \
--o "temp_%(id)s.%(ext)s" \
-${url}`;
+    --cookies cookies.txt \
+    --skip-download \
+    --write-auto-sub \
+    --sub-langs en \
+    --sub-format vtt \
+    --no-check-formats \
+    --no-playlist \
+    -o "temp_%(id)s.%(ext)s" \
+    ${url}`;
     exec(command, (error, stdout, stderr) => {
       console.log("STDOUT:", stdout);
       console.log("STDERR:", stderr);
