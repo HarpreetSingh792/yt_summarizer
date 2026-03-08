@@ -20,7 +20,7 @@ export const summarizeVideo = async (req, res) => {
     return existing; // return cached summary instantly
   }
 
-  // const job = await addSummaryJob({ videoId, language });
+  const job = await addSummaryJob({ videoId, language });
 
   res.status(202).json({
     jobId: job.id,
