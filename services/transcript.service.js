@@ -6,8 +6,6 @@ export const getTranscript = async (videoId) => {
     const url = `https://www.youtube.com/watch?v=${videoId}`;
     const command = `yt-dlp \
 --cookies cookies.txt \
---js-runtimes node \
---remote-components ejs:github \
 --skip-download \
 --write-auto-sub \
 --sub-langs "en.*" \
