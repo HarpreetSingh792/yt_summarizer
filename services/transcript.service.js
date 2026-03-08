@@ -8,12 +8,15 @@ export const getTranscript = async (videoId) => {
 --cookies cookies.txt \
 --skip-download \
 --write-auto-sub \
---sub-langs en \
+--sub-langs "en.*" \
 --sub-format vtt \
 --no-playlist \
 --no-check-formats \
---sleep-requests 2 \
---extractor-args "youtube:player_client=android" \
+--sleep-requests 3 \
+--retries 5 \
+--fragment-retries 5 \
+--compat-options no-youtube-prefer-utc \
+--extractor-args "youtube:player_client=android,web_safari,tv;youtube:skip=webpage" \
 -o "temp_%(id)s.%(ext)s" \
 ${url}`;
     exec(command, (error, stdout, stderr) => {
