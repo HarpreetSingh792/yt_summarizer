@@ -2,7 +2,10 @@ import "../config/env.js";
 import { Worker } from "bullmq";
 import { processSummaryJob } from "../queue/jobWorker.js";
 import IORedis from "ioredis";
+import { connectDB } from "../config/db.js";
 
+
+await connectDB();
 const connection = new IORedis(process.env.REDIS_URL, { maxRetriesPerRequest: null } || {
     host: process.env.REDIS_HOST,
     port: Number(process.env.REDIS_PORT),
