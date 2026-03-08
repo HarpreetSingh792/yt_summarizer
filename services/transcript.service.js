@@ -1,0 +1,50 @@
+import { exec } from "child_process";
+import fs from "fs";
+export const getTranscript = async (videoId) => {
+
+  return new Promise((resolve, reject) => {
+    const url = `https://www.youtube.com/watch?v=${videoId}`;
+    const command = `python3 -m yt_dlp \
+--cookies cookies.txt \
+--js-runtimes node \
+--remote-components ejs:github \
+--skip-download \
+--write-auto-sub \
+--sub-langs "en.*" \
+--sub-format vtt \
+--no-playlist \
+-o "temp_%(id)s.%(ext)s" \
+${url}`;
+    exec(command, (error, stdout, stderr) => {
+      console.log("STDOUT:", stdout);
+      console.log("STDERR:", stderr);
+
+      if (error) {
+        return reject(new Error(stderr || error.message));
+      }
+
+      const subtitleFile = `temp_${videoId}.en.vtt`;
+
+
+      if (!fs.existsSync(subtitleFile)) {
+        return reject(new Error("Subtitle file not found"));
+      }
+
+      const content = fs.readFileSync(subtitleFile, "utf-8");
+
+      const text = content
+        .replace(/WEBVTT.*?\n/g, "")
+        .replace(/Kind:.*?\n/g, "")
+        .replace(/Language:.*?\n/g, "")
+        .replace(/\d{2}:\d{2}:\d{2}\.\d{3} --> .*?\n/g, "")
+        .replace(/<[^>]+>/g, "")   // removes <c>, timestamps, etc
+        .replace(/align:start position:0%/g, "")
+        .replace(/\n/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      fs.unlinkSync(subtitleFile);
+
+      resolve(text);
+    });
+  });
+};
